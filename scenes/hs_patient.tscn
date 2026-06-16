@@ -1,12 +1,48 @@
 [gd_scene format=3 uid="uid://2d2maesqeab5"]
 
 [ext_resource type="Material" uid="uid://but1ldn3g3a1v" path="res://draft-materials/patient.tres" id="1_no2cv"]
+[ext_resource type="Script" uid="uid://cfvtraji8ux8q" path="res://scripts/hs_ventilator.gd" id="2_27yik"]
+[ext_resource type="Material" uid="uid://du5e2wo0lbg2" path="res://draft-materials/instrument.tres" id="2_vxejf"]
+[ext_resource type="Shader" uid="uid://cbq4fl7s40nf6" path="res://shaders/outline.gdshader" id="3_m2el4"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_u0f7b"]
 material = ExtResource("1_no2cv")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0sox8"]
+render_priority = 0
+shader = ExtResource("3_m2el4")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/size = 1.0499999988824
+shader_parameter/on = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_m2el4"]
+material = ExtResource("2_vxejf")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_m2el4"]
+size = Vector3(0.117, 0.473, 0.113)
 
 [node name="HsPatient" type="Node3D" unique_id=506912968]
 
 [node name="PatientMesh" type="MeshInstance3D" parent="." unique_id=2033928712]
 transform = Transform3D(0.5, 0, 0, 0, 0.7057339, 0, 0, 0, 0.33904558, 0, 0, 0)
 mesh = SubResource("CapsuleMesh_u0f7b")
+
+[node name="HsVentilator" type="Node3D" parent="." unique_id=966711962 node_paths=PackedStringArray("mesh")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.5780363, 0.38921538, 0.16240653)
+script = ExtResource("2_27yik")
+mesh = NodePath("Base")
+
+[node name="Base" type="MeshInstance3D" parent="HsVentilator" unique_id=463138518]
+transform = Transform3D(0.11716017, 0, 0, 0, 0.4725429, 0, 0, 0, 0.112518944, 0, -0.108935416, 0)
+material_overlay = SubResource("ShaderMaterial_0sox8")
+mesh = SubResource("BoxMesh_m2el4")
+
+[node name="Area3D" type="Area3D" parent="HsVentilator" unique_id=1644157734]
+
+[node name="Base" type="CollisionShape3D" parent="HsVentilator/Area3D" unique_id=2060238244]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.108935416, 0)
+shape = SubResource("BoxShape3D_m2el4")
+
+[connection signal="input_event" from="HsVentilator/Area3D" to="HsVentilator" method="_on_area_3d_input_event"]
+[connection signal="mouse_entered" from="HsVentilator/Area3D" to="HsVentilator" method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="HsVentilator/Area3D" to="HsVentilator" method="_on_area_3d_mouse_exited"]

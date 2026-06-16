@@ -1,19 +1,60 @@
 [gd_scene format=3 uid="uid://b56ybrodf5hku"]
 
+[ext_resource type="Script" uid="uid://cg6y1v1txn035" path="res://scripts/hs_ehr.gd" id="1_1rwyd"]
 [ext_resource type="Material" uid="uid://du5e2wo0lbg2" path="res://draft-materials/instrument.tres" id="1_ry81i"]
+[ext_resource type="Shader" uid="uid://cbq4fl7s40nf6" path="res://shaders/outline.gdshader" id="2_nao8m"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xq4ii"]
+render_priority = 0
+shader = ExtResource("2_nao8m")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/size = 1.05
+shader_parameter/on = 0.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_hu420"]
 material = ExtResource("1_ry81i")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nao8m"]
+render_priority = 0
+shader = ExtResource("2_nao8m")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/size = 1.05
+shader_parameter/on = 0.0
+
 [sub_resource type="BoxMesh" id="BoxMesh_ry81i"]
 material = ExtResource("1_ry81i")
 
-[node name="HsEhr" type="Node3D" unique_id=1941388535]
+[sub_resource type="BoxShape3D" id="BoxShape3D_1rwyd"]
+size = Vector3(0.4, 0.287, 0.04)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_nao8m"]
+points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5)
+
+[node name="HsEhr" type="Node3D" unique_id=1941388535 node_paths=PackedStringArray("mesh", "mesh_base")]
+script = ExtResource("1_1rwyd")
+mesh = NodePath("Screen")
+mesh_base = NodePath("Base")
 
 [node name="Base" type="MeshInstance3D" parent="." unique_id=252517747]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+material_overlay = SubResource("ShaderMaterial_xq4ii")
 mesh = SubResource("BoxMesh_hu420")
 
 [node name="Screen" type="MeshInstance3D" parent="." unique_id=462431329]
 transform = Transform3D(0.39987063, 0, 0, 0, 0.24871473, 0.020169435, 0, -0.14359556, 0.034934487, 0, 0.2792797, -0.104356065)
+material_overlay = SubResource("ShaderMaterial_nao8m")
 mesh = SubResource("BoxMesh_ry81i")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=2001855673]
+
+[node name="Screen" type="CollisionShape3D" parent="Area3D" unique_id=1796767342]
+transform = Transform3D(1, 0, 0, 0, 0.8660253, 0.5000001, 0, -0.5000001, 0.8660253, 0, 0.2792797, -0.104356065)
+shape = SubResource("BoxShape3D_1rwyd")
+
+[node name="Base" type="CollisionShape3D" parent="Area3D" unique_id=291147612]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_nao8m")
+
+[connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]
+[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]

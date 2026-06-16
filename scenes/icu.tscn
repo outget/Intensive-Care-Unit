@@ -4,18 +4,47 @@
 [ext_resource type="PackedScene" uid="uid://2d2maesqeab5" path="res://scenes/hs_patient.tscn" id="2_dl0ga"]
 [ext_resource type="PackedScene" uid="uid://cpvxahtxi3igb" path="res://scenes/hs_monitor.tscn" id="3_qtq7s"]
 [ext_resource type="PackedScene" uid="uid://b56ybrodf5hku" path="res://scenes/hs_ehr.tscn" id="4_klxhk"]
+[ext_resource type="Material" uid="uid://du5e2wo0lbg2" path="res://draft-materials/instrument.tres" id="5_dl0ga"]
+[ext_resource type="Script" uid="uid://tbyx6n4vb4q2" path="res://scripts/hs_call.gd" id="5_qtq7s"]
+[ext_resource type="Shader" uid="uid://cbq4fl7s40nf6" path="res://shaders/outline.gdshader" id="6_klxhk"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_v321d"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_36trf"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t06jp"]
+render_priority = 0
+shader = ExtResource("6_klxhk")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/size = 0.8
+shader_parameter/on = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_qtq7s"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_klxhk"]
+render_priority = 0
+shader = ExtResource("6_klxhk")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/size = 1.0999999977648
+shader_parameter/on = 0.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_klxhk"]
+material = ExtResource("5_dl0ga")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_dl0ga"]
+height = 0.03315735
+radius = 0.029785156
+
 [node name="IntensiveCareUnit" type="Node3D" unique_id=327916923]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1733835946]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="RoomMesh" type="MultiMeshInstance3D" parent="." unique_id=1474442388]
 transform = Transform3D(2.0904582, 0, 0, 0, 1.5903425, 0, 0, 0, 2.5171885, 0, 0, 0)
 
 [node name="Floor" type="MeshInstance3D" parent="RoomMesh" unique_id=2062452216]
-transform = Transform3D(1.9909388, 0.00017070596, -0.0042110602, -0.008963754, 0.037851013, 0.00530969, 0.0049284436, -0.000117054165, 1.7108077, 0, 0, 0.040300608)
+transform = Transform3D(1.9909388, 0.00017070591, -0.0042110602, -0.008963754, 0.037851013, 0.00530969, 0.0049284436, -0.000117054165, 1.7108077, -0.01634252, 0.031052282, 0.023431513)
 mesh = SubResource("BoxMesh_v321d")
 
 [node name="Ceiling" type="MeshInstance3D" parent="RoomMesh" unique_id=1089335825]
@@ -27,7 +56,7 @@ transform = Transform3D(1.9878882, 0.00011209259, -0.0015865656, 0.0036642007, -
 mesh = SubResource("BoxMesh_v321d")
 
 [node name="Wall2" type="MeshInstance3D" parent="RoomMesh" unique_id=1038580795]
-transform = Transform3D(1.9878882, 0.00011209259, -0.0015865656, 0.0036642007, -6.1103856e-05, 0.8629824, 0.0058755754, -0.03788615, -0.0013965485, 0, 0.43610954, -0.7960821)
+transform = Transform3D(1.9878882, 0.00011209258, -0.0015865655, 0.003664201, -6.1103856e-05, 0.86298245, 0.005875575, -0.037886146, -0.0013965484, 0, 0.43610954, -0.796082)
 mesh = SubResource("BoxMesh_v321d")
 
 [node name="Wall4" type="MeshInstance3D" parent="RoomMesh" unique_id=2040479619]
@@ -37,9 +66,6 @@ mesh = SubResource("BoxMesh_v321d")
 [node name="Wall3" type="MeshInstance3D" parent="RoomMesh" unique_id=9231080]
 transform = Transform3D(-0.0050392305, 0.037823275, 0.001414935, 0.003142647, -6.1002414e-05, 0.87434375, 1.7049364, 0.000111908346, -0.0016074524, -0.96852285, 0.43610954, 0.048247516)
 mesh = SubResource("BoxMesh_v321d")
-
-[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1733835946]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="Player" type="Node3D" parent="." unique_id=1098568153]
 
@@ -63,4 +89,28 @@ transform = Transform3D(0.8044897, 0, -0.5939667, 0, 1, 0, 0.5939667, 0, 0.80448
 [node name="HsEhr" parent="." unique_id=1941388535 instance=ExtResource("4_klxhk")]
 transform = Transform3D(0.5, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, 0.5, 0.9065161, 0.2598819, 1.2072692)
 
-[node name="CallB" type="Node3D" parent="." unique_id=1484701603]
+[node name="HsCall" type="Node3D" parent="." unique_id=1484701603 node_paths=PackedStringArray("mesh")]
+transform = Transform3D(0.57357645, 0, -0.81915206, 0, 1, 0, 0.81915206, 0, 0.57357645, 0.62443346, 0, 0.93701637)
+script = ExtResource("5_qtq7s")
+mesh = NodePath("Area3D/Button")
+
+[node name="Base" type="MeshInstance3D" parent="HsCall" unique_id=1782844231]
+transform = Transform3D(0.13658506, 0, 0, 0, 0.3504784, 0, 0, 0, 0.12271305, 0, 0.19425833, 0)
+material_overlay = SubResource("ShaderMaterial_t06jp")
+mesh = SubResource("BoxMesh_qtq7s")
+
+[node name="Area3D" type="Area3D" parent="HsCall" unique_id=437703363]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.010834575, 0)
+
+[node name="Button" type="MeshInstance3D" parent="HsCall/Area3D" unique_id=784121238]
+transform = Transform3D(0.058549568, 0, 0, 0, 0.019055419, 0, 0, 0, -0.059438735, 0, 0.38314557, 0)
+material_overlay = SubResource("ShaderMaterial_klxhk")
+mesh = SubResource("CylinderMesh_klxhk")
+
+[node name="ButtonShape" type="CollisionShape3D" parent="HsCall/Area3D" unique_id=1210501412]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38605294, 0)
+shape = SubResource("CylinderShape3D_dl0ga")
+
+[connection signal="input_event" from="HsCall/Area3D" to="HsCall" method="_on_area_3d_input_event"]
+[connection signal="mouse_entered" from="HsCall/Area3D" to="HsCall" method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="HsCall/Area3D" to="HsCall" method="_on_area_3d_mouse_exited"]

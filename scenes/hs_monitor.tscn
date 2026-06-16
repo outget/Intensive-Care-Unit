@@ -1,12 +1,36 @@
 [gd_scene format=3 uid="uid://cpvxahtxi3igb"]
 
+[ext_resource type="Script" uid="uid://bu4qgxd3eq1xk" path="res://scripts/hs_monitor.gd" id="1_1kxuu"]
 [ext_resource type="Material" uid="uid://du5e2wo0lbg2" path="res://draft-materials/instrument.tres" id="1_sd62p"]
+[ext_resource type="Shader" uid="uid://cbq4fl7s40nf6" path="res://shaders/outline.gdshader" id="2_oibhm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sd4bj"]
+render_priority = 0
+shader = ExtResource("2_oibhm")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/size = 1.05
+shader_parameter/on = 0.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_yestp"]
 material = ExtResource("1_sd62p")
 
-[node name="HsMonitor" type="Node3D" unique_id=1123220260]
+[sub_resource type="BoxShape3D" id="BoxShape3D_1kxuu"]
+size = Vector3(0.035, 0.449, 0.527)
 
-[node name="MonitorMesh" type="MeshInstance3D" parent="." unique_id=101756538]
+[node name="HsMonitor" type="Node3D" unique_id=1123220260 node_paths=PackedStringArray("mesh")]
+script = ExtResource("1_1kxuu")
+mesh = NodePath("MonitorArea/MonitorMesh")
+
+[node name="MonitorArea" type="Area3D" parent="." unique_id=1164502272]
+
+[node name="MonitorMesh" type="MeshInstance3D" parent="MonitorArea" unique_id=101756538]
 transform = Transform3D(0.0351984, 0, 0, 0, 0.44891164, 0, 0, 0, 0.5273322, 0, 0, 0)
+material_overlay = SubResource("ShaderMaterial_sd4bj")
 mesh = SubResource("BoxMesh_yestp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MonitorArea" unique_id=868590520]
+shape = SubResource("BoxShape3D_1kxuu")
+
+[connection signal="input_event" from="MonitorArea" to="." method="_on_monitor_area_input_event"]
+[connection signal="mouse_entered" from="MonitorArea" to="." method="_on_monitor_area_mouse_entered"]
+[connection signal="mouse_exited" from="MonitorArea" to="." method="_on_monitor_area_mouse_exited"]

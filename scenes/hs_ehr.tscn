@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://b56ybrodf5hku"]
+
+[ext_resource type="Material" uid="uid://du5e2wo0lbg2" path="res://draft-materials/instrument.tres" id="1_ry81i"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_hu420"]
+material = ExtResource("1_ry81i")
+
+[sub_resource type="BoxMesh" id="BoxMesh_ry81i"]
+material = ExtResource("1_ry81i")
+
+[node name="HsEhr" type="Node3D" unique_id=1941388535]
+
+[node name="Base" type="MeshInstance3D" parent="." unique_id=252517747]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+mesh = SubResource("BoxMesh_hu420")
+
+[node name="Screen" type="MeshInstance3D" parent="." unique_id=462431329]
+transform = Transform3D(0.39987063, 0, 0, 0, 0.24871473, 0.020169435, 0, -0.14359556, 0.034934487, 0, 0.2792797, -0.104356065)
+mesh = SubResource("BoxMesh_ry81i")

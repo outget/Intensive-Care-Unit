@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://sn4flskn7sqx"]
+
+[ext_resource type="Script" uid="uid://cvsmj7kqna37f" path="res://scripts/camera_controller.gd" id="1_p76sa"]
+[ext_resource type="PackedScene" uid="uid://2d2maesqeab5" path="res://scenes/hs_patient.tscn" id="2_dl0ga"]
+[ext_resource type="PackedScene" uid="uid://cpvxahtxi3igb" path="res://scenes/hs_monitor.tscn" id="3_qtq7s"]
+[ext_resource type="PackedScene" uid="uid://b56ybrodf5hku" path="res://scenes/hs_ehr.tscn" id="4_klxhk"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_v321d"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_36trf"]
+
+[node name="IntensiveCareUnit" type="Node3D" unique_id=327916923]
+
+[node name="RoomMesh" type="MultiMeshInstance3D" parent="." unique_id=1474442388]
+transform = Transform3D(2.0904582, 0, 0, 0, 1.5903425, 0, 0, 0, 2.5171885, 0, 0, 0)
+
+[node name="Floor" type="MeshInstance3D" parent="RoomMesh" unique_id=2062452216]
+transform = Transform3D(1.9909388, 0.00017070596, -0.0042110602, -0.008963754, 0.037851013, 0.00530969, 0.0049284436, -0.000117054165, 1.7108077, 0, 0, 0.040300608)
+mesh = SubResource("BoxMesh_v321d")
+
+[node name="Ceiling" type="MeshInstance3D" parent="RoomMesh" unique_id=1089335825]
+transform = Transform3D(1.990953, 0.000111989684, -0.0031452812, -0.005884633, 0.037851367, 0.0027685075, 0.0036698487, -6.10461e-05, 1.7108161, 0, 0.869064, 0.040300608)
+mesh = SubResource("BoxMesh_v321d")
+
+[node name="Wall1" type="MeshInstance3D" parent="RoomMesh" unique_id=474962725]
+transform = Transform3D(1.9878882, 0.00011209259, -0.0015865656, 0.0036642007, -6.1103856e-05, 0.8629824, 0.0058755754, -0.03788615, -0.0013965485, 0, 0.43610954, 0.86652464)
+mesh = SubResource("BoxMesh_v321d")
+
+[node name="Wall2" type="MeshInstance3D" parent="RoomMesh" unique_id=1038580795]
+transform = Transform3D(1.9878882, 0.00011209259, -0.0015865656, 0.0036642007, -6.1103856e-05, 0.8629824, 0.0058755754, -0.03788615, -0.0013965485, 0, 0.43610954, -0.7960821)
+mesh = SubResource("BoxMesh_v321d")
+
+[node name="Wall4" type="MeshInstance3D" parent="RoomMesh" unique_id=2040479619]
+transform = Transform3D(-0.0050392305, 0.037823275, 0.001414935, 0.003142647, -6.1002414e-05, 0.87434375, 1.7049364, 0.000111908346, -0.0016074524, 0.9617568, 0.43610954, 0.048247516)
+mesh = SubResource("BoxMesh_v321d")
+
+[node name="Wall3" type="MeshInstance3D" parent="RoomMesh" unique_id=9231080]
+transform = Transform3D(-0.0050392305, 0.037823275, 0.001414935, 0.003142647, -6.1002414e-05, 0.87434375, 1.7049364, 0.000111908346, -0.0016074524, -0.96852285, 0.43610954, 0.048247516)
+mesh = SubResource("BoxMesh_v321d")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1733835946]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Player" type="Node3D" parent="." unique_id=1098568153]
+
+[node name="Camera3D" type="Camera3D" parent="Player" unique_id=560406993]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7176855, 1.6309565)
+fov = 50.0
+script = ExtResource("1_p76sa")
+
+[node name="Bed" type="MeshInstance3D" parent="." unique_id=929458655]
+transform = Transform3D(0.80920213, -0.000129055, 0.0011904466, 0.00049118465, 0.21301854, -0.0023031177, -0.0006211699, 0.0003168352, 1.5489526, 0, 0.056281388, -1.1737784)
+mesh = SubResource("BoxMesh_36trf")
+
+[node name="EHRTerminal" type="Node3D" parent="." unique_id=885635861]
+
+[node name="HsPatient" parent="." unique_id=506912968 instance=ExtResource("2_dl0ga")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.2078321, -1.1312324)
+
+[node name="HsMonitor" parent="." unique_id=1123220260 instance=ExtResource("3_qtq7s")]
+transform = Transform3D(0.8044897, 0, -0.5939667, 0, 1, 0, 0.5939667, 0, 0.8044897, -0.8024423, 0.68134004, 1.1648685)
+
+[node name="HsEhr" parent="." unique_id=1941388535 instance=ExtResource("4_klxhk")]
+transform = Transform3D(0.5, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, 0.5, 0.9065161, 0.2598819, 1.2072692)
+
+[node name="CallB" type="Node3D" parent="." unique_id=1484701603]

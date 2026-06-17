@@ -7,6 +7,7 @@
 [ext_resource type="Material" uid="uid://du5e2wo0lbg2" path="res://draft-materials/instrument.tres" id="5_dl0ga"]
 [ext_resource type="Script" uid="uid://tbyx6n4vb4q2" path="res://scripts/hs_call.gd" id="5_qtq7s"]
 [ext_resource type="Shader" uid="uid://cbq4fl7s40nf6" path="res://shaders/outline.gdshader" id="6_klxhk"]
+[ext_resource type="Script" uid="uid://cnbpahk2otrf6" path="res://scripts/ui_manager.gd" id="8_t06jp"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_v321d"]
 
@@ -110,6 +111,15 @@ mesh = SubResource("CylinderMesh_klxhk")
 [node name="ButtonShape" type="CollisionShape3D" parent="HsCall/Area3D" unique_id=1210501412]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38605294, 0)
 shape = SubResource("CylinderShape3D_dl0ga")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1639335167 node_paths=PackedStringArray("tooltips_label")]
+script = ExtResource("8_t06jp")
+tooltips_label = NodePath("Label")
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=585937640]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 36
 
 [connection signal="input_event" from="HsCall/Area3D" to="HsCall" method="_on_area_3d_input_event"]
 [connection signal="mouse_entered" from="HsCall/Area3D" to="HsCall" method="_on_area_3d_mouse_entered"]

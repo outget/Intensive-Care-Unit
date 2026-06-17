@@ -3,6 +3,8 @@ extends Node3D
 @export var mesh: MeshInstance3D
 @export var mesh_base: MeshInstance3D
 
+@export var tooltip: Label
+
 var outline_material: ShaderMaterial
 var base_outline_material: ShaderMaterial
 
@@ -27,8 +29,11 @@ func handle_hotspot_click() -> void:
 
 func _on_area_3d_mouse_entered() -> void:
 	set_outline_visibility(true)
+	SignalBus.mouse_interactable.emit(self.name, true)
 func _on_area_3d_mouse_exited() -> void:
 	set_outline_visibility(false)
+	SignalBus.mouse_interactable.emit(self.name, false)
+
 
 func set_outline_visibility(vis: bool) -> void:
 	var intensity = 1 if vis else 0

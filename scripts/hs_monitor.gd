@@ -18,9 +18,12 @@ func handle_hotspot_click() -> void:
 
 func _on_monitor_area_mouse_entered() -> void:
 	set_outline_visibility(true)
+	SignalBus.mouse_interactable.emit(self.name, true)
 
 func _on_monitor_area_mouse_exited() -> void:
 	set_outline_visibility(false)
+	SignalBus.mouse_interactable.emit(self.name, false)
+
 
 func set_outline_visibility(vis: bool) -> void:
 	if outline_material:

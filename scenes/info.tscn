@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://b2c000mwvo74f"]
+
+[ext_resource type="Script" uid="uid://bc0gbnatjo5la" path="res://scripts/info.gd" id="1_6cmwp"]
+
+[node name="Info" type="Control" unique_id=1826004257]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6cmwp")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1168246924]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 36
+text = "Ομάδα Εργασίας:
+
+Δημήτριος Βογιατζής 22390015
+Αναστάσιος Κολιόπουλος 22390097
+Χρήστος Ραφαήλ Ντούνης 22390162
+
+3D Model Attribution:
+
+Repository link:
+https://github.com/outget/Intensive-Care-Unit
+
+
+
+"
+fit_content = true
+autowrap_mode = 0
+
+[node name="Back" type="Button" parent="." unique_id=529066711]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = -58.0
+offset_right = 58.0
+offset_bottom = -50.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 46
+text = "Back"
+
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]

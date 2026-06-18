@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://cl06qnj0va60j" path="res://scripts/message_item.gd" id="1_ff2em"]
 
 [node name="MessageItem" type="RichTextLabel" unique_id=1984952328]
-offset_right = 1126.0
-offset_bottom = 357.0
+offset_right = 1246.0
+offset_bottom = 349.0
 theme_override_constants/shadow_outline_size = 2
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/normal_font_size = 36
@@ -12,4 +12,5 @@ theme_override_font_sizes/bold_font_size = 36
 theme_override_font_sizes/bold_italics_font_size = 36
 theme_override_font_sizes/italics_font_size = 36
 theme_override_font_sizes/mono_font_size = 36
+autowrap_mode = 0
 script = ExtResource("1_ff2em")

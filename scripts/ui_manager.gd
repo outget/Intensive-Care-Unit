@@ -16,7 +16,6 @@ func _input(event: InputEvent) -> void:
 func _process(_delta: float) -> void:
 	if is_hover:
 		tooltips_label.position = mouse_pos + Vector2(20,20)
-	
 
 func on_mouse_interactable(interactable: String, on: bool) -> void:
 	if on:

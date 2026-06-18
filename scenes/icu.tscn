@@ -39,9 +39,10 @@ material = ExtResource("5_dl0ga")
 height = 0.03315735
 radius = 0.029785156
 
-[node name="IntensiveCareUnit" type="Node3D" unique_id=327916923 node_paths=PackedStringArray("msgs")]
+[node name="IntensiveCareUnit" type="Node3D" unique_id=327916923 node_paths=PackedStringArray("msgs", "monitor_box")]
 script = ExtResource("1_olvcr")
-msgs = NodePath("UI/VBoxContainer")
+msgs = NodePath("UI/Control/VBoxContainer")
+monitor_box = NodePath("UI/Control/MonitorDetails")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1733835946]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -119,22 +120,61 @@ shape = SubResource("CylinderShape3D_dl0ga")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1639335167 node_paths=PackedStringArray("tooltips_label")]
 script = ExtResource("8_t06jp")
-tooltips_label = NodePath("Label")
+tooltips_label = NodePath("Control/Label")
 
-[node name="Label" type="Label" parent="UI" unique_id=585937640]
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="Control" type="Control" parent="UI" unique_id=1083791101]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="UI/Control" unique_id=585937640]
+layout_mode = 0
+offset_right = 1125.0
+offset_bottom = 63.0
 theme_override_font_sizes/font_size = 36
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI" unique_id=280678741]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control" unique_id=280678741]
+layout_mode = 0
 offset_right = 970.0
 offset_bottom = 433.0
 script = ExtResource("11_vkd3a")
 
-[node name="MessageItem" parent="UI/VBoxContainer" unique_id=1984952328 instance=ExtResource("10_78i5d")]
+[node name="MessageItem" parent="UI/Control/VBoxContainer" unique_id=1984952328 instance=ExtResource("10_78i5d")]
 layout_mode = 2
 bbcode_enabled = true
-text = ""
+
+[node name="MonitorDetails" type="VBoxContainer" parent="UI/Control" unique_id=1075024147]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -131.0
+offset_right = 40.0
+grow_vertical = 0
+
+[node name="HR" type="Label" parent="UI/Control/MonitorDetails" unique_id=1790037265]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+
+[node name="SPO2" type="Label" parent="UI/Control/MonitorDetails" unique_id=1156773653]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+
+[node name="RR" type="Label" parent="UI/Control/MonitorDetails" unique_id=627086257]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+
+[node name="BP" type="Label" parent="UI/Control/MonitorDetails" unique_id=1612569201]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+
+[node name="TEMP" type="Label" parent="UI/Control/MonitorDetails" unique_id=486997094]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
 
 [connection signal="input_event" from="HsCall/Area3D" to="HsCall" method="_on_area_3d_input_event"]
 [connection signal="mouse_entered" from="HsCall/Area3D" to="HsCall" method="_on_area_3d_mouse_entered"]

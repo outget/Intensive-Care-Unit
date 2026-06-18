@@ -35,6 +35,7 @@ size = Vector3(0.117, 0.473, 0.113)
 
 [node name="HsPatient" type="Node3D" unique_id=506912968 node_paths=PackedStringArray("mesh")]
 script = ExtResource("1_0sox8")
+hotspot_id = "hs_patient"
 mesh = NodePath("PatientMesh")
 
 [node name="Area3D" type="Area3D" parent="." unique_id=1008970588]
@@ -51,6 +52,7 @@ mesh = SubResource("CapsuleMesh_u0f7b")
 [node name="HsVentilator" type="Node3D" parent="." unique_id=966711962 node_paths=PackedStringArray("mesh")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.5780363, 0.38921538, 0.16240653)
 script = ExtResource("2_27yik")
+hotspot_id = "hs_ventilator"
 mesh = NodePath("Base")
 
 [node name="Base" type="MeshInstance3D" parent="HsVentilator" unique_id=463138518]

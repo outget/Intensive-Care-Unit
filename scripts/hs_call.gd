@@ -1,7 +1,8 @@
 extends Node3D
 
 @export var mesh: MeshInstance3D
-@export var tooltip: Label
+@export var hotspot_id: String
+
 var outline_material: ShaderMaterial
 
 # Called when the node enters the scene tree for the first time.
@@ -17,6 +18,7 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 
 func handle_hotspot_click() -> void:
 	print("Call button got clicked!")
+	SignalBus.hotspot_clicked.emit(hotspot_id)
 
 # Apply outline shader 
 func _on_area_3d_mouse_entered() -> void:

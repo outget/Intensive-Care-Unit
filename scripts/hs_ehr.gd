@@ -2,8 +2,8 @@ extends Node3D
 
 @export var mesh: MeshInstance3D
 @export var mesh_base: MeshInstance3D
+@export var hotspot_id: String
 
-@export var tooltip: Label
 
 var outline_material: ShaderMaterial
 var base_outline_material: ShaderMaterial

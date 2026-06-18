@@ -19,6 +19,7 @@ size = Vector3(0.035, 0.449, 0.527)
 
 [node name="HsMonitor" type="Node3D" unique_id=1123220260 node_paths=PackedStringArray("mesh")]
 script = ExtResource("1_1kxuu")
+hotspot_id = "hs_monitor"
 mesh = NodePath("MonitorArea/MonitorMesh")
 
 [node name="MonitorArea" type="Area3D" parent="." unique_id=1164502272]

@@ -1,5 +1,6 @@
 extends Node3D
 
+@export var hotspot_id: String
 @export var mesh: MeshInstance3D
 var outline_material: ShaderMaterial
 
@@ -15,6 +16,8 @@ func _on_monitor_area_input_event(_camera: Node, event: InputEvent, _event_posit
 
 func handle_hotspot_click() -> void:
 	print("Monitor got clicked!")
+	SignalBus.hotspot_clicked.emit(hotspot_id)
+
 
 func _on_monitor_area_mouse_entered() -> void:
 	set_outline_visibility(true)

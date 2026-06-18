@@ -34,6 +34,7 @@ points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 
 script = ExtResource("1_1rwyd")
 mesh = NodePath("Screen")
 mesh_base = NodePath("Base")
+hotspot_id = "hs_ehr"
 
 [node name="Base" type="MeshInstance3D" parent="." unique_id=252517747]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)

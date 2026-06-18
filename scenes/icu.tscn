@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://sn4flskn7sqx"]
 
+[ext_resource type="Script" uid="uid://rwsficf5ia11" path="res://scripts/icu.gd" id="1_olvcr"]
 [ext_resource type="Script" uid="uid://cvsmj7kqna37f" path="res://scripts/camera_controller.gd" id="1_p76sa"]
 [ext_resource type="PackedScene" uid="uid://2d2maesqeab5" path="res://scenes/hs_patient.tscn" id="2_dl0ga"]
 [ext_resource type="PackedScene" uid="uid://cpvxahtxi3igb" path="res://scenes/hs_monitor.tscn" id="3_qtq7s"]
@@ -8,6 +9,8 @@
 [ext_resource type="Script" uid="uid://tbyx6n4vb4q2" path="res://scripts/hs_call.gd" id="5_qtq7s"]
 [ext_resource type="Shader" uid="uid://cbq4fl7s40nf6" path="res://shaders/outline.gdshader" id="6_klxhk"]
 [ext_resource type="Script" uid="uid://cnbpahk2otrf6" path="res://scripts/ui_manager.gd" id="8_t06jp"]
+[ext_resource type="PackedScene" uid="uid://blv08tav23xv2" path="res://scenes/message_item.tscn" id="10_78i5d"]
+[ext_resource type="Script" uid="uid://c3bgfnwyy4cyn" path="res://scripts/message_manager.gd" id="11_vkd3a"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_v321d"]
 
@@ -36,7 +39,9 @@ material = ExtResource("5_dl0ga")
 height = 0.03315735
 radius = 0.029785156
 
-[node name="IntensiveCareUnit" type="Node3D" unique_id=327916923]
+[node name="IntensiveCareUnit" type="Node3D" unique_id=327916923 node_paths=PackedStringArray("msgs")]
+script = ExtResource("1_olvcr")
+msgs = NodePath("UI/VBoxContainer")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1733835946]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -112,14 +117,24 @@ mesh = SubResource("CylinderMesh_klxhk")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38605294, 0)
 shape = SubResource("CylinderShape3D_dl0ga")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1639335167 node_paths=PackedStringArray("tooltips_label")]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1639335167 node_paths=PackedStringArray("tooltips_label")]
 script = ExtResource("8_t06jp")
 tooltips_label = NodePath("Label")
 
-[node name="Label" type="Label" parent="CanvasLayer" unique_id=585937640]
+[node name="Label" type="Label" parent="UI" unique_id=585937640]
 offset_right = 40.0
 offset_bottom = 23.0
 theme_override_font_sizes/font_size = 36
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI" unique_id=280678741]
+offset_right = 970.0
+offset_bottom = 433.0
+script = ExtResource("11_vkd3a")
+
+[node name="MessageItem" parent="UI/VBoxContainer" unique_id=1984952328 instance=ExtResource("10_78i5d")]
+layout_mode = 2
+bbcode_enabled = true
+text = ""
 
 [connection signal="input_event" from="HsCall/Area3D" to="HsCall" method="_on_area_3d_input_event"]
 [connection signal="mouse_entered" from="HsCall/Area3D" to="HsCall" method="_on_area_3d_mouse_entered"]

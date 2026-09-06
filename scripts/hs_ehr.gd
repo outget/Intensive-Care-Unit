@@ -25,7 +25,7 @@ func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: 
 			handle_hotspot_click()
 
 func handle_hotspot_click() -> void:
-	print("EHR Terminal got clicked!")
+	SignalBus.hotspot_clicked.emit(hotspot_id)
 
 func _on_area_3d_mouse_entered() -> void:
 	set_outline_visibility(true)

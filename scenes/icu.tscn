@@ -11,6 +11,8 @@
 [ext_resource type="Script" uid="uid://cnbpahk2otrf6" path="res://scripts/ui_manager.gd" id="8_t06jp"]
 [ext_resource type="PackedScene" uid="uid://blv08tav23xv2" path="res://scenes/message_item.tscn" id="10_78i5d"]
 [ext_resource type="Script" uid="uid://c3bgfnwyy4cyn" path="res://scripts/message_manager.gd" id="11_vkd3a"]
+[ext_resource type="PackedScene" uid="uid://bxvuc6s3vf25b" path="res://scenes/hs_ventilator.tscn" id="12_vent"]
+[ext_resource type="PackedScene" path="res://scenes/ehr_panel.tscn" id="13_ehr"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_v321d"]
 
@@ -39,10 +41,12 @@ material = ExtResource("5_dl0ga")
 height = 0.03315735
 radius = 0.029785156
 
-[node name="IntensiveCareUnit" type="Node3D" unique_id=327916923 node_paths=PackedStringArray("msgs", "monitor_box")]
+[node name="IntensiveCareUnit" type="Node3D" unique_id=327916923 node_paths=PackedStringArray("msgs", "monitor_box", "monitor_hotspot", "ehr_panel")]
 script = ExtResource("1_olvcr")
 msgs = NodePath("UI/Control/VBoxContainer")
 monitor_box = NodePath("UI/Control/MonitorDetails")
+monitor_hotspot = NodePath("HsMonitor")
+ehr_panel = NodePath("EhrPanel")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1733835946]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -95,6 +99,9 @@ transform = Transform3D(0.8044897, 0, -0.5939667, 0, 1, 0, 0.5939667, 0, 0.80448
 
 [node name="HsEhr" parent="." unique_id=1941388535 instance=ExtResource("4_klxhk")]
 transform = Transform3D(0.5, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, 0.5, 0.9065161, 0.2598819, 1.2072692)
+
+[node name="HsVentilator" parent="." instance=ExtResource("12_vent")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5780363, 0.0454256, -0.742017)
 
 [node name="HsCall" type="Node3D" parent="." unique_id=1484701603 node_paths=PackedStringArray("mesh")]
 transform = Transform3D(0.57357645, 0, -0.81915206, 0, 1, 0, 0.81915206, 0, 0.57357645, 0.62443346, 0, 0.93701637)
@@ -175,6 +182,8 @@ theme_override_font_sizes/font_size = 36
 [node name="TEMP" type="Label" parent="UI/Control/MonitorDetails" unique_id=486997094]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
+
+[node name="EhrPanel" parent="." instance=ExtResource("13_ehr")]
 
 [connection signal="input_event" from="HsCall/Area3D" to="HsCall" method="_on_area_3d_input_event"]
 [connection signal="mouse_entered" from="HsCall/Area3D" to="HsCall" method="_on_area_3d_mouse_entered"]

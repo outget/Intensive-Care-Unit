@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://bxvuc6s3vf25b"]
+
+[ext_resource type="Script" uid="uid://cfvtraji8ux8q" path="res://scripts/hs_ventilator.gd" id="1_vent"]
+[ext_resource type="Material" uid="uid://du5e2wo0lbg2" path="res://draft-materials/instrument.tres" id="2_inst"]
+[ext_resource type="Shader" uid="uid://cbq4fl7s40nf6" path="res://shaders/outline.gdshader" id="3_out"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vent"]
+render_priority = 0
+shader = ExtResource("3_out")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/size = 1.0499999988824
+shader_parameter/on = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_vent"]
+material = ExtResource("2_inst")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vent"]
+size = Vector3(0.117, 0.473, 0.113)
+
+[node name="HsVentilator" type="Node3D" node_paths=PackedStringArray("mesh")]
+script = ExtResource("1_vent")
+hotspot_id = "hs_ventilator"
+mesh = NodePath("Base")
+
+[node name="Base" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.11716017, 0, 0, 0, 0.4725429, 0, 0, 0, 0.112518944, 0, -0.108935416, 0)
+material_overlay = SubResource("ShaderMaterial_vent")
+mesh = SubResource("BoxMesh_vent")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="Base" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.108935416, 0)
+shape = SubResource("BoxShape3D_vent")
+
+[connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]
+[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]

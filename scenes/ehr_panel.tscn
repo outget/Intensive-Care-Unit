@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://cwf1nmt2co4ea"]
+
+[ext_resource type="Script" path="res://scripts/ehr_panel.gd" id="1_ehr"]
+[ext_resource type="Script" path="res://scripts/ehr_trend.gd" id="2_trend"]
+
+[node name="EhrPanel" type="CanvasLayer" node_paths=PackedStringArray("vitals_grid", "trend_graph", "tabs", "status_label", "window_root")]
+layer = 5
+script = ExtResource("1_ehr")
+vitals_grid = NodePath("Window/Center/MainPanel/Margin/VBox/Body/LeftCol/VitalsGrid")
+trend_graph = NodePath("Window/Center/MainPanel/Margin/VBox/Body/LeftCol/TrendGraph")
+tabs = NodePath("Window/Center/MainPanel/Margin/VBox/Body/Forms")
+status_label = NodePath("Window/Center/MainPanel/Margin/VBox/Footer/StatusLabel")
+window_root = NodePath("Window")
+
+[node name="Window" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.55)
+
+[node name="Center" type="CenterContainer" parent="Window"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MainPanel" type="PanelContainer" parent="Window/Center"]
+custom_minimum_size = Vector2(960, 600)
+
+[node name="Margin" type="MarginContainer" parent="Window/Center/MainPanel"]
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="Window/Center/MainPanel/Margin"]
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Window/Center/MainPanel/Margin/VBox"]
+text = "Ηλεκτρονικός Φάκελος Υγείας (EHR)"
+theme_override_font_sizes/font_size = 28
+
+[node name="Body" type="HBoxContainer" parent="Window/Center/MainPanel/Margin/VBox"]
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="LeftCol" type="VBoxContainer" parent="Window/Center/MainPanel/Margin/VBox/Body"]
+custom_minimum_size = Vector2(280, 0)
+theme_override_constants/separation = 8
+
+[node name="VitalsTitle" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol"]
+text = "Ζωτικά Σημεία"
+theme_override_font_sizes/font_size = 20
+
+[node name="VitalsGrid" type="GridContainer" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol"]
+columns = 2
+
+[node name="HRk" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol/VitalsGrid"]
+text = "HR"
+
+[node name="HR" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol/VitalsGrid"]
+text = "-"
+
+[node name="SPO2k" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol/VitalsGrid"]
+text = "SpO2"
+
+[node name="SPO2" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol/VitalsGrid"]
+text = "-"
+
+[node name="RRk" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol/VitalsGrid"]
+text = "RR"
+
+[node name="RR" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol/VitalsGrid"]
+text = "-"
+
+[node name="BPk" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol/VitalsGrid"]
+text = "BP"
+
+[node name="BP" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol/VitalsGrid"]
+text = "-"
+
+[node name="TEMPk" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol/VitalsGrid"]
+text = "Temp"
+
+[node name="TEMP" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol/VitalsGrid"]
+text = "-"
+
+[node name="TrendTitle" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol"]
+text = "Τάση SpO2 (70-100%)"
+theme_override_font_sizes/font_size = 20
+
+[node name="TrendGraph" type="Control" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol"]
+custom_minimum_size = Vector2(260, 120)
+script = ExtResource("2_trend")
+
+[node name="Forms" type="TabContainer" parent="Window/Center/MainPanel/Margin/VBox/Body"]
+size_flags_horizontal = 3
+
+[node name="Footer" type="HBoxContainer" parent="Window/Center/MainPanel/Margin/VBox"]
+theme_override_constants/separation = 8
+
+[node name="StatusLabel" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Footer"]
+size_flags_horizontal = 3
+
+[node name="SaveButton" type="Button" parent="Window/Center/MainPanel/Margin/VBox/Footer"]
+text = "Αποθήκευση"
+
+[node name="CloseButton" type="Button" parent="Window/Center/MainPanel/Margin/VBox/Footer"]
+text = "Κλείσιμο"
+
+[connection signal="pressed" from="Window/Center/MainPanel/Margin/VBox/Footer/SaveButton" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="Window/Center/MainPanel/Margin/VBox/Footer/CloseButton" to="." method="_on_close_pressed"]

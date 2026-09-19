@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://vgdsmoq8ixjq"
 path.s3tc="res://.godot/imported/Other_baseColor.png-f57991e6b7824b6b197e0c3be5c934c5.s3tc.ctex"
+path.etc2="res://.godot/imported/Other_baseColor.png-f57991e6b7824b6b197e0c3be5c934c5.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://models/medical_ventilator/textures/Other_baseColor.png"
-dest_files=["res://.godot/imported/Other_baseColor.png-f57991e6b7824b6b197e0c3be5c934c5.s3tc.ctex"]
+dest_files=["res://.godot/imported/Other_baseColor.png-f57991e6b7824b6b197e0c3be5c934c5.s3tc.ctex", "res://.godot/imported/Other_baseColor.png-f57991e6b7824b6b197e0c3be5c934c5.etc2.ctex"]
 
 [params]
 

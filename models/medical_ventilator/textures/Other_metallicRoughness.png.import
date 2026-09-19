@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://ds3a420gw7e0a"
 path.s3tc="res://.godot/imported/Other_metallicRoughness.png-b754ef747a2f42a999e93df225a116f4.s3tc.ctex"
+path.etc2="res://.godot/imported/Other_metallicRoughness.png-b754ef747a2f42a999e93df225a116f4.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://models/medical_ventilator/textures/Other_metallicRoughness.png"
-dest_files=["res://.godot/imported/Other_metallicRoughness.png-b754ef747a2f42a999e93df225a116f4.s3tc.ctex"]
+dest_files=["res://.godot/imported/Other_metallicRoughness.png-b754ef747a2f42a999e93df225a116f4.s3tc.ctex", "res://.godot/imported/Other_metallicRoughness.png-b754ef747a2f42a999e93df225a116f4.etc2.ctex"]
 
 [params]
 

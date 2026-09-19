@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://b2rr13uu2j37t"
 path.s3tc="res://.godot/imported/Tubes_metallicRoughness.png-d94e71317948c9720e1f22f3ffc2e38c.s3tc.ctex"
+path.etc2="res://.godot/imported/Tubes_metallicRoughness.png-d94e71317948c9720e1f22f3ffc2e38c.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://models/medical_ventilator/textures/Tubes_metallicRoughness.png"
-dest_files=["res://.godot/imported/Tubes_metallicRoughness.png-d94e71317948c9720e1f22f3ffc2e38c.s3tc.ctex"]
+dest_files=["res://.godot/imported/Tubes_metallicRoughness.png-d94e71317948c9720e1f22f3ffc2e38c.s3tc.ctex", "res://.godot/imported/Tubes_metallicRoughness.png-d94e71317948c9720e1f22f3ffc2e38c.etc2.ctex"]
 
 [params]
 

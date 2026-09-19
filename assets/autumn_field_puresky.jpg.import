@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://eq208kkqsahd"
 path.s3tc="res://.godot/imported/autumn_field_puresky.jpg-eed4d373e9a849208f021cd82674c080.s3tc.ctex"
+path.etc2="res://.godot/imported/autumn_field_puresky.jpg-eed4d373e9a849208f021cd82674c080.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/autumn_field_puresky.jpg"
-dest_files=["res://.godot/imported/autumn_field_puresky.jpg-eed4d373e9a849208f021cd82674c080.s3tc.ctex"]
+dest_files=["res://.godot/imported/autumn_field_puresky.jpg-eed4d373e9a849208f021cd82674c080.s3tc.ctex", "res://.godot/imported/autumn_field_puresky.jpg-eed4d373e9a849208f021cd82674c080.etc2.ctex"]
 
 [params]
 

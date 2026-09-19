@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://vl2umg3b0o7t"
 path.s3tc="res://.godot/imported/computer_terminal_5.png-37ef02c7c4272435a9cee4cfad96fb4f.s3tc.ctex"
+path.etc2="res://.godot/imported/computer_terminal_5.png-37ef02c7c4272435a9cee4cfad96fb4f.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://models/computer_terminal_5.png"
-dest_files=["res://.godot/imported/computer_terminal_5.png-37ef02c7c4272435a9cee4cfad96fb4f.s3tc.ctex"]
+dest_files=["res://.godot/imported/computer_terminal_5.png-37ef02c7c4272435a9cee4cfad96fb4f.s3tc.ctex", "res://.godot/imported/computer_terminal_5.png-37ef02c7c4272435a9cee4cfad96fb4f.etc2.ctex"]
 
 [params]
 

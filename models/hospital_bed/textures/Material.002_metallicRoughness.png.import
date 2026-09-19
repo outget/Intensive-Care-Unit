@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://c5hgi3aks3cug"
 path.s3tc="res://.godot/imported/Material.002_metallicRoughness.png-0067cc9c9a27c795886073e19fdf50e1.s3tc.ctex"
+path.etc2="res://.godot/imported/Material.002_metallicRoughness.png-0067cc9c9a27c795886073e19fdf50e1.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://models/hospital_bed/textures/Material.002_metallicRoughness.png"
-dest_files=["res://.godot/imported/Material.002_metallicRoughness.png-0067cc9c9a27c795886073e19fdf50e1.s3tc.ctex"]
+dest_files=["res://.godot/imported/Material.002_metallicRoughness.png-0067cc9c9a27c795886073e19fdf50e1.s3tc.ctex", "res://.godot/imported/Material.002_metallicRoughness.png-0067cc9c9a27c795886073e19fdf50e1.etc2.ctex"]
 
 [params]
 

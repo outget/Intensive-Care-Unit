@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dwurfn0eemwg3"
 path.s3tc="res://.godot/imported/M_Case_baseColor.png-cbba351e1b531acd536833144b9b760c.s3tc.ctex"
+path.etc2="res://.godot/imported/M_Case_baseColor.png-cbba351e1b531acd536833144b9b760c.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://models/ecg_monitor/textures/M_Case_baseColor.png"
-dest_files=["res://.godot/imported/M_Case_baseColor.png-cbba351e1b531acd536833144b9b760c.s3tc.ctex"]
+dest_files=["res://.godot/imported/M_Case_baseColor.png-cbba351e1b531acd536833144b9b760c.s3tc.ctex", "res://.godot/imported/M_Case_baseColor.png-cbba351e1b531acd536833144b9b760c.etc2.ctex"]
 
 [params]
 

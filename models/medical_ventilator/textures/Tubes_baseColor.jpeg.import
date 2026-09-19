@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cdm8lc06r8x2p"
 path.s3tc="res://.godot/imported/Tubes_baseColor.jpeg-e5a3089a6771da1cb3ff58af53ce6a88.s3tc.ctex"
+path.etc2="res://.godot/imported/Tubes_baseColor.jpeg-e5a3089a6771da1cb3ff58af53ce6a88.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://models/medical_ventilator/textures/Tubes_baseColor.jpeg"
-dest_files=["res://.godot/imported/Tubes_baseColor.jpeg-e5a3089a6771da1cb3ff58af53ce6a88.s3tc.ctex"]
+dest_files=["res://.godot/imported/Tubes_baseColor.jpeg-e5a3089a6771da1cb3ff58af53ce6a88.s3tc.ctex", "res://.godot/imported/Tubes_baseColor.jpeg-e5a3089a6771da1cb3ff58af53ce6a88.etc2.ctex"]
 
 [params]
 

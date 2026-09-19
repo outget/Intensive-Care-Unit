@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://ctyvs1ugwbvf7"
 path.s3tc="res://.godot/imported/Base_normal.png-3602b5cbb7cbb0a5d46d196005fe896c.s3tc.ctex"
+path.etc2="res://.godot/imported/Base_normal.png-3602b5cbb7cbb0a5d46d196005fe896c.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://models/medical_ventilator/textures/Base_normal.png"
-dest_files=["res://.godot/imported/Base_normal.png-3602b5cbb7cbb0a5d46d196005fe896c.s3tc.ctex"]
+dest_files=["res://.godot/imported/Base_normal.png-3602b5cbb7cbb0a5d46d196005fe896c.s3tc.ctex", "res://.godot/imported/Base_normal.png-3602b5cbb7cbb0a5d46d196005fe896c.etc2.ctex"]
 
 [params]
 

@@ -27,6 +27,11 @@ sky_material = SubResource("PanoramaSkyMaterial_dsnre")
 background_mode = 2
 sky = SubResource("Sky_rgd5m")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kf2f7"]
+albedo_color = Color(0.3854925, 0.3854925, 0.3854924, 1)
+metallic = 1.0
+metallic_specular = 1.0
+
 [node name="IntensiveCareUnit" type="Node3D" unique_id=327916923 node_paths=PackedStringArray("msgs", "monitor_box", "monitor_hotspot", "ehr_panel", "debrief_panel")]
 script = ExtResource("1_olvcr")
 msgs = NodePath("UI/Control/VBoxContainer")
@@ -34,6 +39,10 @@ monitor_box = NodePath("UI/Control/MonitorDetails")
 monitor_hotspot = NodePath("HsMonitor")
 ehr_panel = NodePath("EhrPanel")
 debrief_panel = NodePath("DebriefPanel")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1834477175]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1733835946]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -128,6 +137,7 @@ layout_mode = 2
 bbcode_enabled = true
 
 [node name="MonitorDetails" type="VBoxContainer" parent="UI/Control" unique_id=1075024147]
+visible = false
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -162,3 +172,28 @@ theme_override_font_sizes/font_size = 36
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=529386005]
 environment = SubResource("Environment_lafug")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=449101106]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21875799, 1.2313843, -2.847063)
+size = Vector3(6.857361, 3.4627686, 1)
+material = SubResource("StandardMaterial3D_kf2f7")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="." unique_id=979454433]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21875799, -0.6510798, 0.8782482)
+size = Vector3(6.857361, 0.51898193, 8.450623)
+material = SubResource("StandardMaterial3D_kf2f7")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="." unique_id=835705138]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1500591, 2.9998603, 0.8782482)
+size = Vector3(9.249321, 0.51898193, 8.450623)
+material = SubResource("StandardMaterial3D_kf2f7")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=817424593]
+transform = Transform3D(2.9802322e-08, 0, 1.0000001, 0, 1, 0, -1.0000001, 0, 2.9802322e-08, -3.7259145, 1.2313843, -0.6146257)
+size = Vector3(11.322235, 3.4627686, 1)
+material = SubResource("StandardMaterial3D_kf2f7")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="." unique_id=1523582895]
+transform = Transform3D(2.9802322e-08, 0, 1.0000001, 0, 1, 0, -1.0000001, 0, 2.9802322e-08, 3.929327, 1.2313843, -0.6146257)
+size = Vector3(11.322235, 3.4627686, 1)
+material = SubResource("StandardMaterial3D_kf2f7")

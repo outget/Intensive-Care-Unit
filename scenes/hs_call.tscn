@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://bkvv20ra2dism"]
+
+[ext_resource type="Script" uid="uid://tbyx6n4vb4q2" path="res://scripts/hs_call.gd" id="1_call"]
+[ext_resource type="PackedScene" uid="uid://ce0b1veg03mqb" path="res://models/button_with_stand.glb" id="2_btn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_call"]
+size = Vector3(0.45, 1.1, 0.45)
+
+[node name="HsCall" type="Node3D" node_paths=PackedStringArray("model_root")]
+script = ExtResource("1_call")
+hotspot_id = "hs_call"
+model_root = NodePath("Model")
+
+[node name="Model" parent="." instance=ExtResource("2_btn")]
+transform = Transform3D(0.26, 0, 0, 0, 0.26, 0, 0, 0, 0.26, 0, 0, 0)
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.04, 0.54, 0)
+shape = SubResource("BoxShape3D_call")
+
+[connection signal="input_event" from="Area3D" to="." method="_on_area_3d_input_event"]
+[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]

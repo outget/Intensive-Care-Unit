@@ -101,9 +101,13 @@ func open() -> void:
 	SignalBus.ehr_panel_toggled.emit(true)
 
 
-func _on_close_pressed() -> void:
+func close() -> void:
 	hide()
 	SignalBus.ehr_panel_toggled.emit(false)
+
+
+func _on_close_pressed() -> void:
+	close()
 
 
 func update_vitals(vitals: Dictionary, history: Array) -> void:

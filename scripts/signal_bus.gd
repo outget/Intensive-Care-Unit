@@ -1,5 +1,7 @@
 extends Node
 
+var selected_scenario_path: String = "res://json/scenario.json"
+
 signal mouse_interactable(name: String, on: bool)
 
 signal hotspot_clicked(hotspot_id: String)

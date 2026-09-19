@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://bqfrfop37xqo3"]
+
+[ext_resource type="Script" path="res://scripts/debrief_panel.gd" id="1_db"]
+
+[node name="DebriefPanel" type="CanvasLayer" node_paths=PackedStringArray("score_label", "checklist", "path_list", "status_label")]
+layer = 6
+script = ExtResource("1_db")
+score_label = NodePath("Window/Center/MainPanel/Margin/VBox/ScoreLabel")
+checklist = NodePath("Window/Center/MainPanel/Margin/VBox/Body/DocCol/Checklist")
+path_list = NodePath("Window/Center/MainPanel/Margin/VBox/Body/PathCol/PathScroll/PathList")
+status_label = NodePath("Window/Center/MainPanel/Margin/VBox/Footer/StatusLabel")
+
+[node name="Window" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.65)
+
+[node name="Center" type="CenterContainer" parent="Window"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MainPanel" type="PanelContainer" parent="Window/Center"]
+custom_minimum_size = Vector2(900, 620)
+
+[node name="Margin" type="MarginContainer" parent="Window/Center/MainPanel"]
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="Window/Center/MainPanel/Margin"]
+theme_override_constants/separation = 14
+
+[node name="Title" type="Label" parent="Window/Center/MainPanel/Margin/VBox"]
+text = "Απολογισμός Σεναρίου (Debrief)"
+theme_override_font_sizes/font_size = 30
+
+[node name="ScoreLabel" type="Label" parent="Window/Center/MainPanel/Margin/VBox"]
+text = "Σκορ: - / 100"
+theme_override_font_sizes/font_size = 24
+
+[node name="Body" type="HBoxContainer" parent="Window/Center/MainPanel/Margin/VBox"]
+size_flags_vertical = 3
+theme_override_constants/separation = 28
+
+[node name="DocCol" type="VBoxContainer" parent="Window/Center/MainPanel/Margin/VBox/Body"]
+custom_minimum_size = Vector2(360, 0)
+theme_override_constants/separation = 6
+
+[node name="DocTitle" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/DocCol"]
+text = "Λίστα ελέγχου τεκμηρίωσης"
+theme_override_font_sizes/font_size = 20
+
+[node name="Checklist" type="VBoxContainer" parent="Window/Center/MainPanel/Margin/VBox/Body/DocCol"]
+theme_override_constants/separation = 4
+
+[node name="PathCol" type="VBoxContainer" parent="Window/Center/MainPanel/Margin/VBox/Body"]
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="PathTitle" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/PathCol"]
+text = "Διαδρομή αποφάσεων"
+theme_override_font_sizes/font_size = 20
+
+[node name="PathScroll" type="ScrollContainer" parent="Window/Center/MainPanel/Margin/VBox/Body/PathCol"]
+size_flags_vertical = 3
+
+[node name="PathList" type="VBoxContainer" parent="Window/Center/MainPanel/Margin/VBox/Body/PathCol/PathScroll"]
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="Footer" type="HBoxContainer" parent="Window/Center/MainPanel/Margin/VBox"]
+theme_override_constants/separation = 8
+
+[node name="StatusLabel" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Footer"]
+size_flags_horizontal = 3
+
+[node name="ExportButton" type="Button" parent="Window/Center/MainPanel/Margin/VBox/Footer"]
+text = "Εξαγωγή JSON/CSV"
+
+[node name="RestartButton" type="Button" parent="Window/Center/MainPanel/Margin/VBox/Footer"]
+text = "Επανεκκίνηση"
+
+[node name="CloseButton" type="Button" parent="Window/Center/MainPanel/Margin/VBox/Footer"]
+text = "Κλείσιμο"
+
+[connection signal="pressed" from="Window/Center/MainPanel/Margin/VBox/Footer/ExportButton" to="." method="_on_export_pressed"]
+[connection signal="pressed" from="Window/Center/MainPanel/Margin/VBox/Footer/RestartButton" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="Window/Center/MainPanel/Margin/VBox/Footer/CloseButton" to="." method="_on_close_pressed"]

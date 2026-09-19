@@ -1,0 +1,246 @@
+{
+	"schema_version": "1.0",
+	"scenario_meta": {
+		"id": "icu_scenario_bradycardia_v1",
+		"title": "ΜΕΘ: Διαχείριση Βραδυκαρδίας & Υποθερμίας",
+		"description": "Σενάριο διαχείρισης έντονης βραδυκαρδίας και υποθερμίας, με ανάγκη άμεσης παρέμβασης και υποχρεωτική ψηφιακή τεκμηρίωση.",
+		"estimated_duration_minutes": 8.0,
+		"difficulty": "Advanced",
+		"learning_goals": [
+			"Αναγνώριση κλινικού συναγερμού (βραδυκαρδία)",
+			"Αλληλεπίδραση με hotspots (Αναπνευστήρας, Μόνιτορ)",
+			"Χρήση Documentation Gates στο e-Health module",
+			"Τήρηση πρωτοκόλλου κλιμάκωσης"
+		]
+	},
+	"initial_state": {
+		"time_elapsed": 0.0,
+		"current_score": 100.0,
+		"flags": {
+			"assessment_complete": false,
+			"warming_applied": false,
+			"documentation_1_complete": false,
+			"escalation_complete": false,
+			"documentation_2_complete": false
+		},
+		"vitals": {
+			"hr": 42.0,
+			"spo2": 93.0,
+			"rr": 10.0,
+			"bp": "95/60",
+			"temp": 34.8
+		},
+		"ui": {
+			"active_hotspots": [
+				"hs_monitor",
+				"hs_patient",
+				"hs_ventilator",
+				"hs_ehr",
+				"hs_call"
+			],
+			"monitor_alert": true
+		}
+	},
+	"hotspots": [
+		{ "id": "hs_monitor", "label": "Μόνιτορ Ζωτικών (Monitor)" },
+		{ "id": "hs_patient", "label": "Ασθενής/Κλίνη (Patient)" },
+		{ "id": "hs_ventilator", "label": "Αναπνευστήρας (Ventilator)" },
+		{ "id": "hs_ehr", "label": "Τερματικό EHR (e-Health)" },
+		{ "id": "hs_call", "label": "Κουμπί Κλήσης (Call Button)" }
+	],
+	"ehr_config": {
+		"forms": {
+			"assessment_form": {
+				"title": "Κλινική Αξιολόγηση",
+				"fields": ["observation", "skin_color", "consciousness"]
+			},
+			"intervention_form": {
+				"title": "Παρεμβάσεις / Ρυθμίσεις",
+				"fields": ["device", "fiO2_setting", "flow_rate"]
+			},
+			"communication_log": {
+				"title": "Ημερολόγιο Επικοινωνίας",
+				"fields": ["recipient", "reason", "outcome"]
+			}
+		}
+	},
+	"rules": {
+		"global_rules": [
+			{
+				"id": "rule_bradycardia_alarm",
+				"condition": {
+					"target_vital": "hr",
+					"less_than": 40.0
+				},
+				"effects": [
+					{ "type": "ui_visual", "target": "hs_monitor", "state": "blinking_red" },
+					{ "type": "ui_toast", "style": "danger", "message": "ΣΥΝΑΓΕΡΜΟΣ: Βραδυκαρδία HR < 40 (κίνδυνος καρδιακής ανακοπής)" }
+				]
+			}
+		]
+	},
+	"nodes": [
+		{
+			"id": "n1_start",
+			"type": "message",
+			"text": "Βρίσκεστε στη ΜΕΘ. Ο ασθενής στην κλίνη 3 βρέθηκε ληθαργικός με αργό σφυγμό. Το μόνιτορ δείχνει HR 42 και θερμοκρασία 34.8°C.",
+			"next_node_id": "n2_initial_decision"
+		},
+		{
+			"id": "n2_initial_decision",
+			"type": "decision",
+			"text": "Ποια είναι η πρώτη σου ενέργεια;",
+			"options": [
+				{
+					"id": "opt_assess",
+					"label": "Άμεση Αξιολόγηση Ασθενούς",
+					"target_hotspot": "hs_patient",
+					"effects": {
+						"score_delta": 10.0,
+						"flag_to_toggle": "assessment_complete",
+						"toast": "Παρατηρείς κρύο δέρμα και βραδεία απόκριση."
+					},
+					"next_node_id": "n3_intervention"
+				},
+				{
+					"id": "opt_check_monitor",
+					"label": "Έλεγχος Ιστορικού στο Μόνιτορ",
+					"target_hotspot": "hs_monitor",
+					"effects": {
+						"score_delta": 5.0,
+						"toast": "Βλέπεις σταδιακή πτώση του σφυγμού τις τελευταίες ώρες."
+					},
+					"next_node_id": "n3_intervention"
+				}
+			],
+			"timeout": {
+				"seconds": 30.0,
+				"on_timeout_effects": {
+					"vitals_update": { "hr": 35.0, "temp": 34.2 },
+					"score_delta": -10.0,
+					"toast": "⚠️ Καθυστέρηση! Ο σφυγμός πέφτει περαιτέρω."
+				},
+				"next_node_id": "n3_intervention"
+			}
+		},
+		{
+			"id": "n3_intervention",
+			"type": "decision",
+			"text": "Ο ασθενής χρειάζεται άμεση θέρμανση και υποστήριξη οξυγόνωσης.",
+			"options": [
+				{
+					"id": "opt_warm",
+					"label": "Θέρμανση & Χορήγηση Οξυγόνου",
+					"target_hotspot": "hs_ventilator",
+					"effects": {
+						"flag_to_toggle": "warming_applied",
+						"vitals_update": { "hr": 58.0, "temp": 35.6 },
+						"score_delta": 20.0,
+						"toast": "✅ Η θέρμανση και το οξυγόνο βοηθούν, ο σφυγμός σταθεροποιείται."
+					},
+					"next_node_id": "n4_gate_documentation_1"
+				},
+				{
+					"id": "opt_do_nothing",
+					"label": "Καμία αλλαγή - Αναμονή",
+					"target_hotspot": "hs_patient",
+					"effects": {
+						"vitals_update": { "hr": 32.0, "temp": 34.0 },
+						"score_delta": -20.0,
+						"toast": "⛔ Κρίσιμη επιδείνωση. Κίνδυνος καρδιακής ανακοπής."
+					},
+					"next_node_id": "n4_gate_documentation_1"
+				}
+			]
+		},
+		{
+			"id": "n4_gate_documentation_1",
+			"type": "gate",
+			"text": "🛑 GATE: Τεκμηρίωση Αξιολόγησης & Παρέμβασης.",
+			"description": "Το σύστημα μπλοκάρει τη συνέχεια μέχρι να συμπληρωθούν τα πεδία στο EHR.",
+			"gate_requirements": {
+				"target_hotspot": "hs_ehr",
+				"required_forms": [
+					{ "form_id": "assessment_form", "fields": ["observation"] },
+					{ "form_id": "intervention_form", "fields": ["device"] }
+				]
+			},
+			"feedback_blocked": "⚠️ Πρέπει να συμπληρώσεις το EHR για να προχωρήσεις.",
+			"feedback_success": "✅ Η τεκμηρίωση αποθηκεύτηκε.",
+			"effects_on_pass": {
+				"flag_to_toggle": "documentation_1_complete",
+				"score_delta": 10.0
+			},
+			"next_node_id": "n5_reassessment"
+		},
+		{
+			"id": "n5_reassessment",
+			"type": "message",
+			"text": "10 λεπτά αργότερα... Η θερμοκρασία ανεβαίνει ελαφρώς, αλλά ο σφυγμός παραμένει χαμηλός.",
+			"next_node_id": "n6_escalation_decision"
+		},
+		{
+			"id": "n6_escalation_decision",
+			"type": "decision",
+			"text": "Χρειάζεται κλιμάκωση φροντίδας;",
+			"options": [
+				{
+					"id": "opt_call_doc",
+					"label": "Κλήση Καρδιολόγου (Κλιμάκωση)",
+					"target_hotspot": "hs_call",
+					"effects": {
+						"flag_to_toggle": "escalation_complete",
+						"score_delta": 10.0,
+						"toast": "Ειδοποιήθηκε ο καρδιολόγος εφημερίας."
+					},
+					"next_node_id": "n7_gate_documentation_2"
+				},
+				{
+					"id": "opt_wait",
+					"label": "Όχι, συνεχίζω παρακολούθηση",
+					"target_hotspot": "hs_monitor",
+					"effects": {
+						"score_delta": 0.0,
+						"toast": "Συνεχίζεις την παρακολούθηση."
+					},
+					"next_node_id": "n8_end_scenario"
+				}
+			]
+		},
+		{
+			"id": "n7_gate_documentation_2",
+			"type": "gate",
+			"text": "🛑 GATE: Καταγραφή Επικοινωνίας.",
+			"description": "Κατάγραψε την κλήση στο Communication Log.",
+			"gate_requirements": {
+				"target_hotspot": "hs_ehr",
+				"required_forms": [
+					{ "form_id": "communication_log", "fields": ["recipient", "outcome"] }
+				]
+			},
+			"feedback_blocked": "⚠️ Εκκρεμεί η καταγραφή της κλήσης στο EHR.",
+			"feedback_success": "✅ Η τεκμηρίωση αποθηκεύτηκε.",
+			"effects_on_pass": {
+				"flag_to_toggle": "documentation_2_complete",
+				"score_delta": 5.0
+			},
+			"next_node_id": "n8_end_scenario"
+		},
+		{
+			"id": "n8_end_scenario",
+			"type": "end",
+			"text": "Το σενάριο ολοκληρώθηκε.",
+			"debrief_config": {
+				"show_score": true,
+				"show_decision_path": true,
+				"highlight_missed_docs": true,
+				"export_log": true
+			}
+		}
+	],
+	"logging": {
+		"enabled": true,
+		"log_events": ["NODE_ENTER", "HOTSPOT_INTERACTION", "OPTION_SELECTED", "EHR_SUBMIT", "VITALS_CHANGE"],
+		"export_format": "JSON"
+	}
+}

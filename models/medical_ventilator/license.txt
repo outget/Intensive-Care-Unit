@@ -1,0 +1,11 @@
+Model Information:
+* title:	Medical Ventilator
+* source:	https://sketchfab.com/3d-models/medical-ventilator-a03a99fab9314aab96fd41ec69acf1a3
+* author:	lazarys (https://sketchfab.com/lazarys)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Medical Ventilator" (https://sketchfab.com/3d-models/medical-ventilator-a03a99fab9314aab96fd41ec69acf1a3) by lazarys (https://sketchfab.com/lazarys) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

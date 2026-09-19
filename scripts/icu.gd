@@ -21,7 +21,6 @@ var _node_generation: int = 0
 var _active_global_rules: Dictionary = { }
 var _log_events: Array = []
 var _start_ticks: int = 0
-# Highest score reachable (initial + best choice at every decision + every gate).
 var _max_score: int = 100
 
 
@@ -73,6 +72,8 @@ func _find_node(node_id: String) -> Dictionary:
 func _on_hotspot_cliked(hotspot_id: String) -> void:
 	_log("HOTSPOT_INTERACTION", { "hotspot": hotspot_id })
 
+	if hotspot_id == "hs_ehr":
+		return
 	var active_node := _find_node(current_node_id)
 	if active_node.is_empty() or active_node["type"] != "decision":
 		return
@@ -271,9 +272,10 @@ func _export_report() -> void:
 
 
 func load_from_json() -> void:
-	var file := FileAccess.open("res://json/scenario.json", FileAccess.READ)
+	var path := SignalBus.selected_scenario_path
+	var file := FileAccess.open(path, FileAccess.READ)
 	if file == null:
-		push_error("Could not open scenario JSON")
+		push_error("Could not open scenario JSON: %s" % path)
 		return
 
 	var json := JSON.new()
@@ -330,6 +332,18 @@ func print_scenario_info() -> void:
 	msgs.add_msg("Δυσκολία: " + str(meta["difficulty"]), Message.MsgType.SYSTEM)
 	msgs.add_msg("Διάρκεια: " + str(meta["estimated_duration_minutes"]) + " min", Message.MsgType.SYSTEM)
 	msgs.add_msg("Η προσομοίωση θα ξεκινήσει σε 10 δευτερόλεπτα", Message.MsgType.SYSTEM)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not event.is_action_pressed("ui_cancel"):
+		return
+	get_viewport().set_input_as_handled()
+	if ehr_panel and ehr_panel.visible and ehr_panel.has_method("close"):
+		ehr_panel.close()
+	elif debrief_panel and debrief_panel.visible and debrief_panel.has_method("close"):
+		debrief_panel.close()
+	else:
+		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 
 
 func _ready() -> void:

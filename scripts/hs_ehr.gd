@@ -1,45 +1,36 @@
 extends Node3D
 
-@export var mesh: MeshInstance3D
-@export var mesh_base: MeshInstance3D
 @export var hotspot_id: String
+@export var model_root: Node3D
+@export var outline_size: float = 1.03
 
+var _outlines: Array[ShaderMaterial] = []
 
-var outline_material: ShaderMaterial
-var base_outline_material: ShaderMaterial
 
 func _ready() -> void:
-	if mesh and mesh.material_overlay:
-		mesh.material_overlay = mesh.material_overlay.duplicate()
-		outline_material = mesh.material_overlay as ShaderMaterial
+	var root: Node = model_root if model_root else self
+	for junk in root.find_children("*Shadow*", "MeshInstance3D", true, false):
+		junk.visible = false
+	for junk in root.find_children("*Background*", "MeshInstance3D", true, false):
+		junk.visible = false
+	_outlines = HotspotOutline.attach(root, outline_size)
+	HotspotOutline.set_visible(_outlines, false)
 
-	if mesh_base and mesh_base.material_overlay:
-		mesh_base.material_overlay = mesh_base.material_overlay.duplicate()
-		base_outline_material = mesh_base.material_overlay as ShaderMaterial
-
-	set_outline_visibility(false)
 
 func _on_area_3d_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			handle_hotspot_click()
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		SignalBus.hotspot_clicked.emit(hotspot_id)
 
-func handle_hotspot_click() -> void:
-	SignalBus.hotspot_clicked.emit(hotspot_id)
 
 func _on_area_3d_mouse_entered() -> void:
-	set_outline_visibility(true)
-	SignalBus.mouse_interactable.emit(self.name, true)
+	HotspotOutline.set_visible(_outlines, true)
+	SignalBus.mouse_interactable.emit(name, true)
+
+
 func _on_area_3d_mouse_exited() -> void:
-	set_outline_visibility(false)
-	SignalBus.mouse_interactable.emit(self.name, false)
+	HotspotOutline.set_visible(_outlines, false)
+	SignalBus.mouse_interactable.emit(name, false)
 
 
 func set_outline_visibility(vis: bool) -> void:
-	var intensity = 1 if vis else 0
-
-	if outline_material:
-		outline_material.set_shader_parameter("on", intensity)
-
-	if base_outline_material:
-		base_outline_material.set_shader_parameter("on", intensity)
+	HotspotOutline.set_visible(_outlines, vis)

@@ -55,37 +55,37 @@ theme_override_font_sizes/font_size = 20
 columns = 2
 
 [node name="HRk" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol/VitalsGrid"]
-text = "HR"
+text = "Σφύξεις"
 
 [node name="HR" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol/VitalsGrid"]
 text = "-"
 
 [node name="SPO2k" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol/VitalsGrid"]
-text = "SpO2"
+text = "SpO₂"
 
 [node name="SPO2" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol/VitalsGrid"]
 text = "-"
 
 [node name="RRk" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol/VitalsGrid"]
-text = "RR"
+text = "Αναπνοές"
 
 [node name="RR" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol/VitalsGrid"]
 text = "-"
 
 [node name="BPk" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol/VitalsGrid"]
-text = "BP"
+text = "Αρτ. πίεση"
 
 [node name="BP" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol/VitalsGrid"]
 text = "-"
 
 [node name="TEMPk" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol/VitalsGrid"]
-text = "Temp"
+text = "Θερμοκρασία"
 
 [node name="TEMP" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol/VitalsGrid"]
 text = "-"
 
 [node name="TrendTitle" type="Label" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol"]
-text = "Τάση SpO2 (70-100%)"
+text = "Τάση SpO₂ (70–100%)"
 theme_override_font_sizes/font_size = 20
 
 [node name="TrendGraph" type="Control" parent="Window/Center/MainPanel/Margin/VBox/Body/LeftCol"]

@@ -1,36 +1,197 @@
-[gd_scene format=3 uid="uid://cpvxahtxi3igb"]
+[gd_scene load_steps=9 format=3 uid="uid://cpvxahtxi3igb"]
 
-[ext_resource type="Script" uid="uid://bu4qgxd3eq1xk" path="res://scripts/hs_monitor.gd" id="1_1kxuu"]
-[ext_resource type="Material" uid="uid://du5e2wo0lbg2" path="res://draft-materials/instrument.tres" id="1_sd62p"]
-[ext_resource type="Shader" uid="uid://cbq4fl7s40nf6" path="res://shaders/outline.gdshader" id="2_oibhm"]
+[ext_resource type="Script" uid="uid://bu4qgxd3eq1xk" path="res://scripts/hs_monitor.gd" id="1_mon"]
+[ext_resource type="PackedScene" uid="uid://dg0fvjcoqhlff" path="res://models/ecg_monitor/scene.gltf" id="2_ecg"]
+[ext_resource type="Script" path="res://scripts/monitor_screen.gd" id="3_scr"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sd4bj"]
-render_priority = 0
-shader = ExtResource("2_oibhm")
-shader_parameter/color = Color(1, 1, 1, 1)
-shader_parameter/size = 1.05
-shader_parameter/on = 0.0
+[sub_resource type="BoxShape3D" id="BoxShape3D_mon"]
+size = Vector3(0.75, 1.45, 0.85)
 
-[sub_resource type="BoxMesh" id="BoxMesh_yestp"]
-material = ExtResource("1_sd62p")
+[sub_resource type="ViewportTexture" id="ViewportTexture_scr"]
+resource_local_to_scene = true
+viewport_path = NodePath("MonitorScreen")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_1kxuu"]
-size = Vector3(0.035, 0.449, 0.527)
+[sub_resource type="StandardMaterial3D" id="Material_scr"]
+resource_local_to_scene = true
+shading_mode = 0
+disable_ambient_light = true
+texture_filter = 1
+albedo_texture = SubResource("ViewportTexture_scr")
 
-[node name="HsMonitor" type="Node3D" unique_id=1123220260 node_paths=PackedStringArray("mesh")]
-script = ExtResource("1_1kxuu")
+[sub_resource type="QuadMesh" id="QuadMesh_scr"]
+size = Vector2(0.4, 0.4)
+
+[node name="HsMonitor" type="Node3D" node_paths=PackedStringArray("model_root", "screen_ui")]
+script = ExtResource("1_mon")
 hotspot_id = "hs_monitor"
-mesh = NodePath("MonitorArea/MonitorMesh")
+model_root = NodePath("Model")
+screen_ui = NodePath("MonitorScreen/ScreenUI")
 
-[node name="MonitorArea" type="Area3D" parent="." unique_id=1164502272]
+[node name="MonitorArea" type="Area3D" parent="."]
 
-[node name="MonitorMesh" type="MeshInstance3D" parent="MonitorArea" unique_id=101756538]
-transform = Transform3D(0.0351984, 0, 0, 0, 0.44891164, 0, 0, 0, 0.5273322, 0, 0, 0)
-material_overlay = SubResource("ShaderMaterial_sd4bj")
-mesh = SubResource("BoxMesh_yestp")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MonitorArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72, 0.1)
+shape = SubResource("BoxShape3D_mon")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MonitorArea" unique_id=868590520]
-shape = SubResource("BoxShape3D_1kxuu")
+[node name="Model" parent="." instance=ExtResource("2_ecg")]
+
+[node name="MonitorScreen" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = false
+size = Vector2i(400, 400)
+render_target_update_mode = 4
+
+[node name="ScreenUI" type="Control" parent="MonitorScreen" node_paths=PackedStringArray("hr_value", "spo2_value", "rr_value", "bp_value", "temp_value", "alarm_banner")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("3_scr")
+hr_value = NodePath("Rows/HRRow/Value")
+spo2_value = NodePath("Rows/SpO2Row/Value")
+rr_value = NodePath("Rows/RRRow/Value")
+bp_value = NodePath("Rows/BPRow/Value")
+temp_value = NodePath("Rows/TempRow/Value")
+alarm_banner = NodePath("AlarmBanner")
+
+[node name="Bg" type="ColorRect" parent="MonitorScreen/ScreenUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.02, 0.03, 0.04, 1)
+
+[node name="Rows" type="VBoxContainer" parent="MonitorScreen/ScreenUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 22.0
+offset_top = 14.0
+offset_right = -22.0
+offset_bottom = -68.0
+theme_override_constants/separation = 4
+
+[node name="HRRow" type="HBoxContainer" parent="MonitorScreen/ScreenUI/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MonitorScreen/ScreenUI/Rows/HRRow"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(0.35, 1, 0.45, 1)
+theme_override_font_sizes/font_size = 26
+text = "HR"
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="MonitorScreen/ScreenUI/Rows/HRRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.35, 1, 0.45, 1)
+theme_override_font_sizes/font_size = 60
+text = "--"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SpO2Row" type="HBoxContainer" parent="MonitorScreen/ScreenUI/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MonitorScreen/ScreenUI/Rows/SpO2Row"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 26
+text = "SpO2"
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="MonitorScreen/ScreenUI/Rows/SpO2Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.4, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 60
+text = "--"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="RRRow" type="HBoxContainer" parent="MonitorScreen/ScreenUI/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MonitorScreen/ScreenUI/Rows/RRRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.35, 1)
+theme_override_font_sizes/font_size = 26
+text = "RR"
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="MonitorScreen/ScreenUI/Rows/RRRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.9, 0.35, 1)
+theme_override_font_sizes/font_size = 60
+text = "--"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="BPRow" type="HBoxContainer" parent="MonitorScreen/ScreenUI/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MonitorScreen/ScreenUI/Rows/BPRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 0.95, 1)
+theme_override_font_sizes/font_size = 26
+text = "BP"
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="MonitorScreen/ScreenUI/Rows/BPRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.9, 0.9, 0.95, 1)
+theme_override_font_sizes/font_size = 44
+text = "--"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TempRow" type="HBoxContainer" parent="MonitorScreen/ScreenUI/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MonitorScreen/ScreenUI/Rows/TempRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 26
+text = "Temp"
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="MonitorScreen/ScreenUI/Rows/TempRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.85, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 48
+text = "--"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="AlarmBanner" type="Label" parent="MonitorScreen/ScreenUI"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -58.0
+offset_bottom = -8.0
+theme_override_colors/font_color = Color(1, 0.28, 0.28, 1)
+theme_override_font_sizes/font_size = 26
+text = "⚠ ALARM   SpO2 < 90%"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Screen" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0.242)
+mesh = SubResource("QuadMesh_scr")
+surface_material_override/0 = SubResource("Material_scr")
 
 [connection signal="input_event" from="MonitorArea" to="." method="_on_monitor_area_input_event"]
 [connection signal="mouse_entered" from="MonitorArea" to="." method="_on_monitor_area_mouse_entered"]

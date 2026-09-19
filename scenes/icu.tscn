@@ -5,48 +5,35 @@
 [ext_resource type="PackedScene" uid="uid://2d2maesqeab5" path="res://scenes/hs_patient.tscn" id="2_dl0ga"]
 [ext_resource type="PackedScene" uid="uid://cpvxahtxi3igb" path="res://scenes/hs_monitor.tscn" id="3_qtq7s"]
 [ext_resource type="PackedScene" uid="uid://b56ybrodf5hku" path="res://scenes/hs_ehr.tscn" id="4_klxhk"]
-[ext_resource type="Material" uid="uid://du5e2wo0lbg2" path="res://draft-materials/instrument.tres" id="5_dl0ga"]
-[ext_resource type="Script" uid="uid://tbyx6n4vb4q2" path="res://scripts/hs_call.gd" id="5_qtq7s"]
-[ext_resource type="Shader" uid="uid://cbq4fl7s40nf6" path="res://shaders/outline.gdshader" id="6_klxhk"]
 [ext_resource type="Script" uid="uid://cnbpahk2otrf6" path="res://scripts/ui_manager.gd" id="8_t06jp"]
 [ext_resource type="PackedScene" uid="uid://blv08tav23xv2" path="res://scenes/message_item.tscn" id="10_78i5d"]
 [ext_resource type="Script" uid="uid://c3bgfnwyy4cyn" path="res://scripts/message_manager.gd" id="11_vkd3a"]
 [ext_resource type="PackedScene" uid="uid://bxvuc6s3vf25b" path="res://scenes/hs_ventilator.tscn" id="12_vent"]
-[ext_resource type="PackedScene" path="res://scenes/ehr_panel.tscn" id="13_ehr"]
+[ext_resource type="PackedScene" uid="uid://cwf1nmt2co4ea" path="res://scenes/ehr_panel.tscn" id="13_ehr"]
+[ext_resource type="PackedScene" uid="uid://bqfrfop37xqo3" path="res://scenes/debrief_panel.tscn" id="14_dbrf"]
+[ext_resource type="Texture2D" uid="uid://eq208kkqsahd" path="res://assets/autumn_field_puresky.jpg" id="14_kf2f7"]
+[ext_resource type="PackedScene" uid="uid://djupjd1xbd0pr" path="res://models/hospital_bed/scene.gltf" id="15_bed"]
+[ext_resource type="PackedScene" uid="uid://bkvv20ra2dism" path="res://scenes/hs_call.tscn" id="16_call"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_v321d"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_36trf"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_dsnre"]
+panorama = ExtResource("14_kf2f7")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_t06jp"]
-render_priority = 0
-shader = ExtResource("6_klxhk")
-shader_parameter/color = Color(1, 1, 1, 1)
-shader_parameter/size = 0.8
-shader_parameter/on = 0.0
+[sub_resource type="Sky" id="Sky_rgd5m"]
+sky_material = SubResource("PanoramaSkyMaterial_dsnre")
 
-[sub_resource type="BoxMesh" id="BoxMesh_qtq7s"]
+[sub_resource type="Environment" id="Environment_lafug"]
+background_mode = 2
+sky = SubResource("Sky_rgd5m")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_klxhk"]
-render_priority = 0
-shader = ExtResource("6_klxhk")
-shader_parameter/color = Color(1, 1, 1, 1)
-shader_parameter/size = 1.0999999977648
-shader_parameter/on = 0.0
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_klxhk"]
-material = ExtResource("5_dl0ga")
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_dl0ga"]
-height = 0.03315735
-radius = 0.029785156
-
-[node name="IntensiveCareUnit" type="Node3D" unique_id=327916923 node_paths=PackedStringArray("msgs", "monitor_box", "monitor_hotspot", "ehr_panel")]
+[node name="IntensiveCareUnit" type="Node3D" unique_id=327916923 node_paths=PackedStringArray("msgs", "monitor_box", "monitor_hotspot", "ehr_panel", "debrief_panel")]
 script = ExtResource("1_olvcr")
 msgs = NodePath("UI/Control/VBoxContainer")
 monitor_box = NodePath("UI/Control/MonitorDetails")
 monitor_hotspot = NodePath("HsMonitor")
 ehr_panel = NodePath("EhrPanel")
+debrief_panel = NodePath("DebriefPanel")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1733835946]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -55,27 +42,33 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 transform = Transform3D(2.0904582, 0, 0, 0, 1.5903425, 0, 0, 0, 2.5171885, 0, 0, 0)
 
 [node name="Floor" type="MeshInstance3D" parent="RoomMesh" unique_id=2062452216]
-transform = Transform3D(1.9909388, 0.00017070591, -0.0042110602, -0.008963754, 0.037851013, 0.00530969, 0.0049284436, -0.000117054165, 1.7108077, -0.01634252, 0.031052282, 0.023431513)
+transform = Transform3D(1.9909388, 0.0001707059, -0.0042110602, -0.008963754, 0.037851013, 0.00530969, 0.0049284436, -0.000117054165, 1.7108077, -0.01634252, -0.14229707, 0.023431513)
+visible = false
 mesh = SubResource("BoxMesh_v321d")
 
 [node name="Ceiling" type="MeshInstance3D" parent="RoomMesh" unique_id=1089335825]
 transform = Transform3D(1.990953, 0.000111989684, -0.0031452812, -0.005884633, 0.037851367, 0.0027685075, 0.0036698487, -6.10461e-05, 1.7108161, 0, 0.869064, 0.040300608)
+visible = false
 mesh = SubResource("BoxMesh_v321d")
 
 [node name="Wall1" type="MeshInstance3D" parent="RoomMesh" unique_id=474962725]
-transform = Transform3D(1.9878882, 0.00011209259, -0.0015865656, 0.0036642007, -6.1103856e-05, 0.8629824, 0.0058755754, -0.03788615, -0.0013965485, 0, 0.43610954, 0.86652464)
+transform = Transform3D(1.9878882, 0.000112092566, -0.001586565, 0.0036642011, -6.1103856e-05, 0.8629826, 0.005875574, -0.037886146, -0.0013965484, 6.9611122e-12, 0.43610957, 0.86652464)
+visible = false
 mesh = SubResource("BoxMesh_v321d")
 
 [node name="Wall2" type="MeshInstance3D" parent="RoomMesh" unique_id=1038580795]
 transform = Transform3D(1.9878882, 0.00011209258, -0.0015865655, 0.003664201, -6.1103856e-05, 0.86298245, 0.005875575, -0.037886146, -0.0013965484, 0, 0.43610954, -0.796082)
+visible = false
 mesh = SubResource("BoxMesh_v321d")
 
 [node name="Wall4" type="MeshInstance3D" parent="RoomMesh" unique_id=2040479619]
 transform = Transform3D(-0.0050392305, 0.037823275, 0.001414935, 0.003142647, -6.1002414e-05, 0.87434375, 1.7049364, 0.000111908346, -0.0016074524, 0.9617568, 0.43610954, 0.048247516)
+visible = false
 mesh = SubResource("BoxMesh_v321d")
 
 [node name="Wall3" type="MeshInstance3D" parent="RoomMesh" unique_id=9231080]
 transform = Transform3D(-0.0050392305, 0.037823275, 0.001414935, 0.003142647, -6.1002414e-05, 0.87434375, 1.7049364, 0.000111908346, -0.0016074524, -0.96852285, 0.43610954, 0.048247516)
+visible = false
 mesh = SubResource("BoxMesh_v321d")
 
 [node name="Player" type="Node3D" parent="." unique_id=1098568153]
@@ -85,45 +78,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7176855, 1.6309565)
 fov = 50.0
 script = ExtResource("1_p76sa")
 
-[node name="Bed" type="MeshInstance3D" parent="." unique_id=929458655]
-transform = Transform3D(0.80920213, -0.000129055, 0.0011904466, 0.00049118465, 0.21301854, -0.0023031177, -0.0006211699, 0.0003168352, 1.5489526, 0, 0.056281388, -1.1737784)
-mesh = SubResource("BoxMesh_36trf")
+[node name="Bed" parent="." unique_id=1396475078 instance=ExtResource("15_bed")]
+transform = Transform3D(-1.9670125e-08, 0, 0.45, 0.11646856, 0.4346666, 5.091003e-09, -0.4346666, 0.11646856, -1.899988e-08, 0, -0.22306746, -1.0440959)
 
 [node name="EHRTerminal" type="Node3D" parent="." unique_id=885635861]
 
 [node name="HsPatient" parent="." unique_id=506912968 instance=ExtResource("2_dl0ga")]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.2078321, -1.1312324)
+transform = Transform3D(0.8, 0, 0, 0, 0.39999998, 0.6928203, 0, -0.6928203, 0.39999998, 0.027932495, 0.5133132, -0.908806)
 
 [node name="HsMonitor" parent="." unique_id=1123220260 instance=ExtResource("3_qtq7s")]
-transform = Transform3D(0.8044897, 0, -0.5939667, 0, 1, 0, 0.5939667, 0, 0.8044897, -0.8024423, 0.68134004, 1.1648685)
+transform = Transform3D(0.29698336, 0, 0.4022448, 0, 0.5, 0, -0.4022448, 0, 0.29698336, -0.8024423, 0.118383765, 1.1648685)
 
 [node name="HsEhr" parent="." unique_id=1941388535 instance=ExtResource("4_klxhk")]
-transform = Transform3D(0.5, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, 0.5, 0.9065161, 0.2598819, 1.2072692)
+transform = Transform3D(0.19999999, 0, -0.34641019, 0, 0.4, 0, 0.34641019, 0, 0.19999999, 0.9065161, 0.2598819, 1.2072692)
 
-[node name="HsVentilator" parent="." instance=ExtResource("12_vent")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5780363, 0.0454256, -0.742017)
+[node name="HsVentilator" parent="." unique_id=1777554518 instance=ExtResource("12_vent")]
+transform = Transform3D(-0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, -0.70710677, 0.9779875, -0.20995551, -1.1848544)
 
-[node name="HsCall" type="Node3D" parent="." unique_id=1484701603 node_paths=PackedStringArray("mesh")]
-transform = Transform3D(0.57357645, 0, -0.81915206, 0, 1, 0, 0.81915206, 0, 0.57357645, 0.62443346, 0, 0.93701637)
-script = ExtResource("5_qtq7s")
-mesh = NodePath("Area3D/Button")
-
-[node name="Base" type="MeshInstance3D" parent="HsCall" unique_id=1782844231]
-transform = Transform3D(0.13658506, 0, 0, 0, 0.3504784, 0, 0, 0, 0.12271305, 0, 0.19425833, 0)
-material_overlay = SubResource("ShaderMaterial_t06jp")
-mesh = SubResource("BoxMesh_qtq7s")
-
-[node name="Area3D" type="Area3D" parent="HsCall" unique_id=437703363]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.010834575, 0)
-
-[node name="Button" type="MeshInstance3D" parent="HsCall/Area3D" unique_id=784121238]
-transform = Transform3D(0.058549568, 0, 0, 0, 0.019055419, 0, 0, 0, -0.059438735, 0, 0.38314557, 0)
-material_overlay = SubResource("ShaderMaterial_klxhk")
-mesh = SubResource("CylinderMesh_klxhk")
-
-[node name="ButtonShape" type="CollisionShape3D" parent="HsCall/Area3D" unique_id=1210501412]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38605294, 0)
-shape = SubResource("CylinderShape3D_dl0ga")
+[node name="HsCall" parent="." unique_id=1484701603 instance=ExtResource("16_call")]
+transform = Transform3D(-0.32766083, 0, -0.22943059, 0, 0.4, 0, 0.22943059, 0, -0.32766083, 0.78255284, 0.085606635, 0.64845645)
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1639335167 node_paths=PackedStringArray("tooltips_label")]
 script = ExtResource("8_t06jp")
@@ -183,8 +156,9 @@ theme_override_font_sizes/font_size = 36
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 
-[node name="EhrPanel" parent="." instance=ExtResource("13_ehr")]
+[node name="EhrPanel" parent="." unique_id=2018396196 instance=ExtResource("13_ehr")]
 
-[connection signal="input_event" from="HsCall/Area3D" to="HsCall" method="_on_area_3d_input_event"]
-[connection signal="mouse_entered" from="HsCall/Area3D" to="HsCall" method="_on_area_3d_mouse_entered"]
-[connection signal="mouse_exited" from="HsCall/Area3D" to="HsCall" method="_on_area_3d_mouse_exited"]
+[node name="DebriefPanel" parent="." unique_id=1448135544 instance=ExtResource("14_dbrf")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=529386005]
+environment = SubResource("Environment_lafug")

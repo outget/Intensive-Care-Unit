@@ -1,60 +1,69 @@
 extends Node3D
 
 @export var hotspot_id: String
-@export var mesh: MeshInstance3D
-var outline_material: ShaderMaterial
+@export var model_root: Node3D
+@export var outline_size: float = 1.03
+@export var screen_ui: Node
+
+var _outlines: Array[ShaderMaterial] = []
 var _alarm: bool = false
+var _hover: bool = false
 
 
 func _ready() -> void:
-	if mesh.material_overlay:
-		outline_material = mesh.material_overlay as ShaderMaterial
+	_outlines = HotspotOutline.attach(model_root if model_root else self, outline_size)
 	set_process(false)
-	set_outline_visibility(false)
+	_refresh()
+
+
+func set_vitals(vitals: Dictionary) -> void:
+	if screen_ui and screen_ui.has_method("update_vitals"):
+		screen_ui.update_vitals(vitals)
 
 
 func set_alarm(on: bool) -> void:
-	_alarm = on
-	if not outline_material:
+	if _alarm == on:
 		return
-	if on:
-		outline_material.set_shader_parameter("color", Color(1, 0, 0, 1))
-		set_process(true)
-	else:
-		set_process(false)
-		outline_material.set_shader_parameter("color", Color(1, 1, 1, 1))
-		outline_material.set_shader_parameter("on", 0)
+	_alarm = on
+	set_process(_alarm)
+	if screen_ui and screen_ui.has_method("set_alarm"):
+		screen_ui.set_alarm(on)
+	_refresh()
 
 
 func _process(_delta: float) -> void:
-	if _alarm and outline_material:
-		outline_material.set_shader_parameter("on", 0.5 + 0.5 * sin(Time.get_ticks_msec() / 120.0))
+	var pulse: float = 0.4 + 0.6 * (0.5 + 0.5 * sin(Time.get_ticks_msec() / 150.0))
+	HotspotOutline.set_param(_outlines, "color", Color(1.0, 0.0, 0.0, pulse))
+	HotspotOutline.set_param(_outlines, "on", 1.0)
+
+
+func _refresh() -> void:
+	if _alarm:
+		return
+	if _hover:
+		HotspotOutline.set_param(_outlines, "color", Color.WHITE)
+		HotspotOutline.set_param(_outlines, "on", 1.0)
+	else:
+		HotspotOutline.set_param(_outlines, "on", 0.0)
 
 
 func _on_monitor_area_input_event(_camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			handle_hotspot_click()
-
-
-func handle_hotspot_click() -> void:
-	print("Monitor got clicked!")
-	SignalBus.hotspot_clicked.emit(hotspot_id)
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		SignalBus.hotspot_clicked.emit(hotspot_id)
 
 
 func _on_monitor_area_mouse_entered() -> void:
-	set_outline_visibility(true)
-	SignalBus.mouse_interactable.emit(self.name, true)
+	_hover = true
+	_refresh()
+	SignalBus.mouse_interactable.emit(name, true)
 
 
 func _on_monitor_area_mouse_exited() -> void:
-	set_outline_visibility(false)
-	SignalBus.mouse_interactable.emit(self.name, false)
+	_hover = false
+	_refresh()
+	SignalBus.mouse_interactable.emit(name, false)
 
 
 func set_outline_visibility(vis: bool) -> void:
-	if outline_material:
-		if vis:
-			outline_material.set_shader_parameter("on", 1)
-		else:
-			outline_material.set_shader_parameter("on", 0)
+	_hover = vis
+	_refresh()
